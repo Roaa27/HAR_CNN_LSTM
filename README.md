@@ -1,74 +1,78 @@
-# 🎥 Human Activity Recognition using CNN-LSTM
+# 🎥 Human Activity Recognition using CNN-LSTM (UCF101)
 
 ## 📌 Project Overview
-This project implements a Hybrid Deep Learning Model (CNN + LSTM) to recognize human activities from video sequences.
+This project implements a Deep Learning model for Human Activity Recognition (HAR) using a hybrid architecture of CNN and LSTM.
 
-The model combines:
-- CNN (Convolutional Neural Network) → extracts spatial features from frames
-- LSTM (Long Short-Term Memory) → captures temporal dependencies across frames
-
-This project is developed using TensorFlow and trained on Google Colab.
+The model is trained on video data and is capable of classifying human actions based on sequences of frames.
 
 ---
 
-## 🎯 Objectives
-- Recognize human actions from video data
-- Extract spatial and temporal features
-- Build an efficient deep learning pipeline for video classification
+## 🎯 Objective
+To classify human activities from videos by combining:
+- CNN for spatial feature extraction (from frames)
+- LSTM for temporal sequence learning (between frames)
 
 ---
 
 ## 📂 Dataset
+We used the UCF101 dataset.
 
-We used a subset of the UCF101 dataset.
-
-### 📊 Selected Classes (6 Activities)
-
-- WalkingWithDog → Walking with a dog
-- JumpingJack → Jumping jacks
-- PushUps → Push ups
-- Basketball → Playing basketball
-- SoccerJuggling → Soccer juggling
-- VolleyballSpiking → Volleyball spiking
+Dataset link:
+https://www.crcv.ucf.edu/data/UCF101/
 
 ---
 
-## ⚙️ Dataset Configuration
+## 🏷️ Selected Classes (15 Classes)
 
-- Image Size: 64 × 64
-- Frames per Video: 10
-- Videos per Class: 40
-- Total Classes: 6
-- Total Samples: ~240 videos
+- WalkingWithDog
+- JumpingJack
+- PushUps
+- Basketball
+- SoccerJuggling
+- VolleyballSpiking
+- TennisSwing
+- Punch
+- PlayingGuitar
+- PlayingPiano
+- GolfSwing
+- HorseRiding
+- SkateBoarding
+- Surfing
+- Bowling
+
+---
+
+## ⚙️ Data Preprocessing
+
+- Extracted frames from each video
+- Selected 10 frames per video
+- Resized frames to 64×64 pixels
+- Normalized pixel values to range [0, 1]
 
 ---
 
 ## 🧠 Model Architecture
 
 ### 🔹 CNN Feature Extractor
-- Conv2D (32 filters, 3×3)
-- Batch Normalization
+- Conv2D (16 filters)
+- MaxPooling
+- Conv2D (32 filters)
 - MaxPooling
 - Conv2D (64 filters)
-- Batch Normalization
-- MaxPooling
-- Conv2D (128 filters)
 - MaxPooling
 - Flatten layer
 
 ---
 
 ### 🔹 LSTM Sequence Model
-- LSTM (128 units, return sequences)
-- Dropout (0.3)
 - LSTM (64 units)
-- Dropout (0.3)
+- Dropout (0.5)
 
 ---
 
 ### 🔹 Fully Connected Layers
 - Dense (64 neurons, ReLU)
-- Output Layer (6 neurons, Softmax)
+- Output Layer (15 classes, Softmax)
 
 ---
 
@@ -77,50 +81,39 @@ We used a subset of the UCF101 dataset.
 - Optimizer: Adam
 - Loss Function: Categorical Crossentropy
 - Batch Size: 8
-- Epochs: 20
-- Callback: EarlyStopping
-
----
-
-## 🔄 Data Preprocessing
-
-- Extract frames from videos
-- Resize frames to 64×64
-- Normalize pixel values (0–1)
-
----
-
-## 🔁 Data Augmentation
-
-Applied techniques:
-- Random horizontal flip
-- Random brightness adjustment
-- Random contrast adjustment
+- Epochs: 10
+- Validation Split: 20%
 
 ---
 
 ## 📊 Evaluation Metrics
 
+The model is evaluated using:
+
 - Accuracy
 - Loss
 - Confusion Matrix
-- Classification Report
 
 ---
 
-## 📈 Results
+## 📈 Visualization
 
-The model successfully learns spatial and temporal patterns from video sequences and achieves good performance given the limited dataset size.
+The project includes:
+
+- Training vs Validation Accuracy graph
+- Training vs Validation Loss graph
+- Confusion Matrix heatmap
 
 ---
 
-## 🧪 Prediction Output Example
+## 🧪 Prediction Example
 
-Prediction:
-The person is doing jumping jacks ⭐
+The model predicts the activity from a video and returns confidence score.
 
-Confidence:
-92.5%
+Example Output:
+
+Prediction: Jumping Jack  
+Confidence: 87.3%
 
 ---
 
@@ -129,21 +122,7 @@ Confidence:
 1. Open Google Colab
 2. Upload notebook
 3. Run all cells sequentially
-4. Test using sample video
+4. Test model using:
 
----
-
-## 📌 Key Features
-
-- CNN + LSTM Hybrid Architecture
-- Video-based classification
-- Data augmentation for better generalization
-- Visualization (accuracy, loss, confusion matrix)
-
----
-
-
-
-## ⭐ Notes
-
-A subset of 6 classes was selected to ensure faster training and stable performance within limited computational resources (Google Colab).
+```python
+test_video("path_to_video.avi")
