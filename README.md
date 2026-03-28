@@ -125,4 +125,4 @@ Confidence: 87.3%
 4. Test model using:
 
 ```python
-test_video("path_to_video.avi")
+test_video("/content/UCF-101/JumpingJack/v_JumpingJack_g01_c01.avi")
